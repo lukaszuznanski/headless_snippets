@@ -1,0 +1,61 @@
+plugin.tx_seo {
+    settings {
+        domain = https://foo.bar
+    }
+    config {
+        xmlSitemap {
+            sitemaps {
+                pages {
+                    provider = Vendor\Package\XmlSitemap\PagesXmlSitemapDataProvider
+                    config {
+                        excludedDoktypes = {$plugin.tx_seo.settings.xmlSitemap.sitemaps.pages.excludedDoktypes}
+                        additionalWhere = {$plugin.tx_seo.settings.xmlSitemap.sitemaps.pages.additionalWhere}
+                    }
+                }
+                news {
+                    provider = Vendor\Package\XmlSitemap\RecordsXmlSitemapDataProvider
+                    config {
+                        table = tx_news_domain_model_news
+                        sortField = uid
+                        lastModifiedField = tstamp
+                        pid = YOUR-PID
+                        recursive = 2
+                        url {
+                            pageId = 1679
+                            fieldToParameterMap {
+                                uid = tx_news_pi1[news]
+                            }
+
+                            additionalGetParameters {
+                                tx_news_pi1.controller = News
+                                tx_news_pi1.action = detail
+                            }
+
+                            useCacheHash = 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+seo_sitemap = PAGE
+seo_sitemap {
+    typeNum = 1533906435
+
+    config {
+        cache_period = 900
+        disableAllHeaderCode = 1
+        admPanel = 0
+        removeDefaultJS = 1
+        removeDefaultCss = 1
+        removePageCss = 1
+        additionalHeaders.10 {
+            header = Content-Type:application/xml;charset=utf-8
+        }
+    }
+
+    10 = USER
+    10.userFunc = Vendor\Package\XmlSitemap\XmlSitemapRenderer->render
+}
