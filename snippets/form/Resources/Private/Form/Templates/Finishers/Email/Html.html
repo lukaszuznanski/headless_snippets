@@ -1,0 +1,67 @@
+{namespace formBiofarm=Macopedia\BiofarmBase\ViewHelpers}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body>
+<table width="800" cellpadding="10" cellspacing="0">
+    <formBiofarm:renderAllFormValues renderable="{form.formDefinition}" as="formValue">
+        <tr>
+            <td width="600" valign="top" align="left" style="border-bottom:1px solid black;">{formvh:translateElementProperty(element: formValue.element, property: 'label')}</td>
+            <td width="600" valign="top" align="left" style="border-bottom:1px solid black;">
+                <f:if condition="{formValue.value}">
+                    <f:then>
+                        <f:if condition="{formBiofarm:is.Array(variable: formValue.processedValue)}">
+                            <f:then>
+                                <table style="border-collapse: collapse">
+                                    <f:for each="{formValue.processedValue}" as="value" key="key" iteration="valueCounter">
+                                        <f:if condition="{valueCounter.cycle} == 1">
+                                            <f:then>
+                                                <tr style="text-align: center;">
+                                                    <f:for each="{value -> formBiofarm:format.toArray(mixed: value)}" as="subvalue" key="subkey">
+                                                        <td style="border:1px solid black;padding:10px;"><b>{subkey -> formBiofarm:translate(namespace:formValue.element.identifier, slug:subkey)}</b></td>
+                                                    </f:for>
+                                                </tr>
+                                                <tr>
+                                                    <f:for each="{value -> formBiofarm:format.toArray(mixed: value)}" as="subvalue">
+                                                        <td style="border:1px solid black;padding:10px;">{subvalue}</td>
+                                                    </f:for>
+                                                </tr>
+                                            </f:then>
+                                        </f:if>
+                                        <tr>
+                                            <f:if condition="{valueCounter.cycle} > 1">
+                                                <f:then>
+                                                    <f:for each="{value -> formBiofarm:format.toArray(mixed: value)}" as="subvalue">
+                                                        <td style="border:1px solid black;padding:10px;">{subvalue}</td>
+                                                    </f:for>
+                                                </f:then>
+                                            </f:if>
+                                        </tr>
+                                    </f:for>
+                                </table>
+                            </f:then>
+                            <f:else>
+                                <table cellspacing="0" border="0">
+                                    <tr>
+                                        <td>
+                                            <f:format.nl2br>{formValue.processedValue}</f:format.nl2br>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </f:else>
+                        </f:if>
+                    </f:then>
+                    <f:else>
+                        -
+                    </f:else>
+                </f:if>
+            </td>
+        </tr>
+    </formBiofarm:renderAllFormValues>
+</table>
+</body>
+</html>
