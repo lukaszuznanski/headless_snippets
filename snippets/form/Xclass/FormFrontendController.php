@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Macopedia\BiofarmBase\Xclass;
+namespace Vendor\Extension\Xclass;
 
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
