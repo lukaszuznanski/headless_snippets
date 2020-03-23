@@ -1,0 +1,8 @@
+plugin.tx_form {
+    settings {
+        yamlConfigurations {
+            100 = EXT:extension/Configuration/Form/Setup/Setup.yaml
+            110 = EXT:extension/Configuration/Form/Form/Contact.form.yaml
+        }
+    }
+}
